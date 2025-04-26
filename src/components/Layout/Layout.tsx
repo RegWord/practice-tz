@@ -13,9 +13,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     <AntLayout style={{ minHeight: '100vh' }}>
       <Header />
       <Content style={{ padding: '24px 50px' }}>
-        <div style={{ background: '#fff', padding: 24, minHeight: 280 }}>
-          {children}
-        </div>
+        <div>{children}</div>
       </Content>
     </AntLayout>
   );

@@ -12,25 +12,24 @@ interface BlogFormProps {
 
 const BlogForm: React.FC<BlogFormProps> = ({ initialValues, onSubmit, loading }) => {
   const [form] = Form.useForm();
-  
-  // Начальные значения формы
+
   React.useEffect(() => {
     if (initialValues) {
       form.setFieldsValue(initialValues);
     }
   }, [form, initialValues]);
-  
-  // Обработчик отправки формы
+
   const handleSubmit = (values: Omit<Blog, 'id' | 'deleted'>) => {
     onSubmit(values);
   };
-  
+
   return (
     <Form
       form={form}
       layout="vertical"
       onFinish={handleSubmit}
       initialValues={initialValues}
+      style={{ maxWidth: '600px', margin: '0 auto' }}
     >
       <Form.Item
         name="title"
@@ -42,19 +41,17 @@ const BlogForm: React.FC<BlogFormProps> = ({ initialValues, onSubmit, loading })
       >
         <Input placeholder="Введите заголовок" />
       </Form.Item>
-      
+
       <Form.Item
         name="text"
         label="Текст"
-        rules={[
-          { required: true, message: 'Пожалуйста, введите текст' }
-        ]}
+        rules={[{ required: true, message: 'Пожалуйста, введите текст' }]}
       >
         <TextArea rows={10} placeholder="Введите текст записи" />
       </Form.Item>
-      
+
       <Form.Item>
-        <Button type="primary" htmlType="submit" loading={loading}>
+        <Button type="primary" htmlType="submit" loading={loading} block>
           {initialValues?.id ? 'Сохранить' : 'Создать'}
         </Button>
       </Form.Item>

@@ -16,12 +16,11 @@ const BlogDetail: React.FC<BlogDetailProps> = ({ blogId }) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [deleting, setDeleting] = useState<boolean>(false);
   const navigate = useNavigate();
-  
+
   useEffect(() => {
     fetchBlog();
   }, [blogId]);
-  
-  // Загрузка информации о блоге
+
   const fetchBlog = async () => {
     setLoading(true);
     try {
@@ -44,11 +43,10 @@ const BlogDetail: React.FC<BlogDetailProps> = ({ blogId }) => {
       setLoading(false);
     }
   };
-  
-  // Удаление блога
+
   const handleDelete = async () => {
     if (!blog) return;
-    
+
     setDeleting(true);
     try {
       const success = await blogApi.deleteBlog(blog.id);
@@ -74,19 +72,21 @@ const BlogDetail: React.FC<BlogDetailProps> = ({ blogId }) => {
       setDeleting(false);
     }
   };
-  
+
   if (loading) {
-    return <Spin size="large" />;
+    return <Spin size="large" style={{ display: 'block', margin: '50px auto' }} />;
   }
-  
+
   if (!blog) {
-    return <div>Запись не найдена</div>;
+    return <div style={{ textAlign: 'center', padding: '20px' }}>Запись не найдена</div>;
   }
-  
+
   return (
     <div>
-      <div style={{ marginBottom: 16, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <Title level={2}>{blog.title}</Title>
+      <div style={{ marginBottom: 24, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <Title level={2} style={{ margin: 0, fontWeight: 600 }}>
+          {blog.title}
+        </Title>
         <Space>
           <Link to={`/blog/${blog.id}/edit`}>
             <Button type="primary">Редактировать</Button>
@@ -98,21 +98,23 @@ const BlogDetail: React.FC<BlogDetailProps> = ({ blogId }) => {
             okText="Да"
             cancelText="Нет"
           >
-            <Button danger loading={deleting}>Удалить</Button>
+            <Button danger loading={deleting}>
+              Удалить
+            </Button>
           </Popconfirm>
         </Space>
       </div>
-      
-      <Divider />
-      
-      <Paragraph style={{ whiteSpace: 'pre-line' }}>
+
+      <Divider style={{ borderColor: 'rgba(0, 0, 0, 0.05)' }} />
+
+      <Paragraph style={{ whiteSpace: 'pre-line', fontSize: '16px', lineHeight: '1.6' }}>
         {blog.text}
       </Paragraph>
-      
-      <Divider />
-      
+
+      <Divider style={{ borderColor: 'rgba(0, 0, 0, 0.05)' }} />
+
       <Link to="/blog">
-        <Button>Вернуться к списку</Button>
+        <Button type="default">Вернуться к списку</Button>
       </Link>
     </div>
   );

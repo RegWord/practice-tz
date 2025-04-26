@@ -7,7 +7,6 @@ const { Header: AntHeader } = Layout;
 const Header: React.FC = () => {
   const location = useLocation();
   
-  // Определение текущего активного пункта меню
   const getSelectedKey = (): string => {
     const path = location.pathname;
     if (path.includes('/blog')) return 'blog';
